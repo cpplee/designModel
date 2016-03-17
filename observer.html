@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+           div{
+               margin:10px;
+               width: 500px;
+               height: 200px;
+               border:1px solid green;
+           }
+
+           #content{
+
+          }
+          #ad{
+
+
+
+         }
+
+    </style>
+    <script>
+
+//        function t(){
+//            var sel = document.getElementsByTagName('select')[0];
+//           // alert(sel.value);
+//            if(sel.value =='male'){
+//                document.getElementById('content').style.backgroundColor = 'gray';
+//                document.getElementById('ad').innerHTML='汽车';
+//            }else{
+//                document.getElementById('content').style.backgroundColor = 'pink';
+//                document.getElementById('ad').innerHTML='减肥';
+//            }
+//
+//        }
+
+
+
+
+    </script>
+</head>
+<body>
+
+ <select name="" id="sel" >
+     <option value="male" >man</option>
+     <option value="female">women</option>
+ </select>
+<input type="button" value="卸载footer观察者" onclick="t2()"/>
+ <input type="button" value="绑定footer观察者" onclick="t1()">
+<div id="content">我是内容</div>
+<div id="ad">我是广告</div>
+ <div id="study">我是学习</div>
+<div id="footer">我是底部</div>
+</body>
+
+<script>
+    //使用观察者模式
+    var sel = document.getElementById('sel');
+    //创建一个观察者对象合集用来存储观察者
+    sel.obervers={};
+    sel.attach = function(key,obj){
+        sel.obervers[key]=obj;
+    }
+    sel.detach = function(key){
+        delete sel.obervers[key];
+    }
+
+    sel.onchange = sel.notify = function(){
+        for(var key in this.obervers){
+            this.obervers[key].update(this);
+        }
+
+    }
+    var content =document.getElementById('content');
+    content.update = function(subject){
+
+        if(subject.value=='male'){
+            this.style.backgroundColor ='gray';
+        }else if(subject.value=='female'){
+            this.style.backgroundColor='pink';
+        }
+
+    }
+    var ad = document.getElementById('ad');
+    ad.update = function(subject){
+
+        if(subject.value=='male'){
+            this.innerHTML ='cars';
+        }else if(subject.value=='female'){
+            this.innerHTML='food';
+        }
+
+    }
+    var study = document.getElementById('study');
+    study.update = function(subject){
+
+        if(subject.value=='male'){
+            this.style.backgroundColor ='gray';
+        }else if(subject.value=='female'){
+            this.style.backgroundColor='pink';
+        }
+
+    }
+    var footer = document.getElementById('footer');
+    footer.update = function(subject){
+
+        if(subject.value=='male'){
+            this.innerHTML ='male';
+        }else if(subject.value=='female'){
+            this.innerHTML='female';
+        }
+
+    }
+
+
+//    sel.attach('content',content);
+//    sel.attach('ad',ad);
+//    sel.attach('study',study);
+//    sel.attach('footer',footer);
+   function t1(){
+       sel.attach('footer',footer);
+   }
+    function t2(){
+        sel.detach('footer');
+    }
+</script>
+</html>
